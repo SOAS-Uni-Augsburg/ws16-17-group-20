@@ -88,55 +88,6 @@ public class DomainStore {
 			return 0;
 		}
 	}
-
-//	private void checkSingleOccurenceUnit() {
-//		ArrayList<Integer> ocurrence = new ArrayList<Integer>();
-//
-//		for (int i = 0; i < 9; i = i + 3) {
-//			for (int j = 0; j < 9; j = j + 3) {
-//				if (!isDomainSolved(i, j)) {
-//					for (int f = 0; f < store.get(i).get(j).size(); f++) {
-//						ocurrence.add(store.get(i).get(j).get(f));
-//					}
-//				}
-//				if (!isDomainSolved(i + 1, j)) {
-//					for (int f = 0; f < store.get(i + 1).get(j).size(); f++) {
-//						ocurrence.add(store.get(i + 1).get(j).get(f));
-//					}
-//				}
-//				if (!isDomainSolved(i + 2, j)) {
-//					for (int f = 0; f < store.get(i + 2).get(j).size(); f++) {
-//						ocurrence.add(store.get(i + 2).get(j).get(f));
-//					}
-//				}
-//				for (int f = 1; f <= 9; f++) {
-//					if (Collections.frequency(ocurrence, f) == 1) {
-//						if (!isDomainSolved(i, j)) {
-//							if (store.get(i).get(j).contains(f)) {
-//								store.get(i).get(j).clear();
-//								store.get(i).get(j).add(f);
-//							}
-//						}
-//						if (!isDomainSolved(i + 1, j)) {
-//							if (store.get(i + 1).get(j).contains(f)) {
-//								store.get(i + 1).get(j).clear();
-//								store.get(i + 1).get(j).add(f);
-//							}
-//						}
-//						if (!isDomainSolved(i + 2, j)) {
-//							if (store.get(i + 2).get(j).contains(f)) {
-//								store.get(i + 1).get(j).clear();
-//								store.get(i + 2).get(j).add(f);
-//							}
-//						}
-//
-//					}
-//				}
-//
-//			}
-//			ocurrence.clear();
-//		}
-//	}
 	
 	public boolean checkSingleOccurenceUnit() {
 		for(int i = 0; i < 3; ++i){

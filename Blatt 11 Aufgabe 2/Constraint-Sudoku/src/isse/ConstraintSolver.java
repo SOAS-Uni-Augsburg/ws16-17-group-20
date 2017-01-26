@@ -26,7 +26,7 @@ public class ConstraintSolver implements Solver {
 
 	@Override
 	public Sudoku solve(Sudoku input) {
-		stats.tickRuntime();		
+		stats.tickRuntime();
 		Sudoku assignment = solveRek(input);
 		stats.tockRuntime();
 		return assignment;
@@ -37,47 +37,69 @@ public class ConstraintSolver implements Solver {
 		DomainStore store = new DomainStore(input);
 		boolean hasFoundSingleOccurence = false;
 		boolean hasAssignedValue = false;
-		while(!assignment.isSolution(input) && assignment.isValid()){
+		while (!assignment.isSolution(input) && assignment.isValid()) {
 			hasFoundSingleOccurence = false;
 			hasAssignedValue = false;
-			for (int i = 0; i < 9; i++) { 
-				for (int j = 0; j < 9; j++) { 
-					if(assignment.isUnassigned(i, j) && store.isDomainSolved(i, j)){
+			for (int i = 0; i < 9; i++) {
+				for (int j = 0; j < 9; j++) {
+					if (assignment.isUnassigned(i, j) && store.isDomainSolved(i, j)) {
 						int value = store.getSolutionForVariable(i, j);
 						assignment.put(i, j, value);
 						store.updateDomainStoreWithNewFixValue(i, j, value);
 						hasAssignedValue = true;
 					}
-				} 
+				}
 			}
-			hasFoundSingleOccurence = store.checkSingleOccurenceUnit();
-			if(!hasAssignedValue && !hasFoundSingleOccurence){
+
+			if(!hasAssignedValue){
+				hasFoundSingleOccurence = store.checkSingleOccurenceUnit();
+			}			
+
+			if (!hasAssignedValue && !hasFoundSingleOccurence) {
 				// start heuristik
 				int[] pos = store.getCellWithSmallestDomain();
-				if(pos[0] == -1) return null;
-				
-				ArrayList<Integer> possibleSolutions = store.getDomainForCell(pos[0], pos[1]);
-				Random r = new Random();
+				if (pos[0] == -1)
+					return null;
+
+				ArrayList<Integer> possibleSolutions = new ArrayList<Integer>();
+				possibleSolutions.addAll(store.getDomainForCell(pos[0], pos[1]));				
 				Sudoku result = null;
-				while(!possibleSolutions.isEmpty()){
-					int index = r.nextInt(possibleSolutions.size());
-					int value = possibleSolutions.get(index);
+				while (!possibleSolutions.isEmpty()) {
+					// if (possibleSolutions.size() == 1) {
+					// break;
+					// }
+					
+					int value = possibleSolutions.get(0);
 					Sudoku rekSudoku = new Sudoku(assignment);
 					rekSudoku.put(pos[0], pos[1], value);
 					
+					stats.markRecursiveCall();
 					result = solveRek(rekSudoku);
-					if(result == null){
-						possibleSolutions.remove(new Integer(value)); 
-					} else {
+					if (result == null) 
+					{
+						if (possibleSolutions.size() == 1)
+						{
+							return null;
+						} 
+						else 
+						{
+							possibleSolutions.remove(new Integer(value));
+						}
+
+					}
+					else
+					{
 						return result;
 					}
 				}
-				
-				
+
 			}
-			
+
 		}
-		if(assignment.isSolution(input)) {return assignment;}
-		else {return null;}
+		if (assignment.isSolution(input)) {
+			return assignment;
+		} else {
+			return null;
+		}
 	}
 }

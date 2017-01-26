@@ -97,4 +97,127 @@ public class SudokuTest {
 		Assert.assertTrue(newStats.recursiveCalls < stats.recursiveCalls);
 		System.out.println("::::::::: END HARD PROBLEM ::::");
 	}
+	
+	@Test
+	public void testAllEasySudokus() throws Exception{
+		System.out.println(":::: TestStarting ::::");
+		System.out.println("Solving all easy sudokus!");
+		int sumRecCallsForBackTrackingSolver = 0;
+		int sumRecCallsForConstraintSolver = 0;
+		
+		SudokuReader reader = new SudokuReader();
+		String relativePath = "Pack1/Easy";
+		String fileEnding = ".sdk";
+		for(int i = 1; i <= 10; ++i){
+			StatisticsObject backTrackingStats = new StatisticsObject();
+			StatisticsObject constraintsStats = new StatisticsObject();
+			Solver backTrackingSolver = new BacktrackSolver(backTrackingStats);
+			Solver constraintSolver = new ConstraintSolver(constraintsStats);
+			
+			String concatenated;
+			if(i < 10){
+				concatenated = relativePath + "0" + i + fileEnding;
+			}
+			else {
+				concatenated = relativePath + i + fileEnding;
+			}
+			File f = new File(concatenated);
+			Sudoku currentSudoku = reader.readFromFile(f);
+			System.out.println("Solving " + i + ". Easy Sudoku");
+			System.out.println("Using BackTrack Algorithm");
+			evaluateSolver(backTrackingSolver, currentSudoku);
+			System.out.println("Using Constraint Algorithm");
+			evaluateSolver(constraintSolver, currentSudoku);
+			sumRecCallsForBackTrackingSolver += backTrackingStats.recursiveCalls;
+			sumRecCallsForConstraintSolver += constraintsStats.recursiveCalls;
+		}
+		
+		Assert.assertTrue(sumRecCallsForConstraintSolver < sumRecCallsForBackTrackingSolver);
+		System.out.println("Finished Solving all easy sudokus!");
+		System.out.println("Backtracking Solver used " + sumRecCallsForBackTrackingSolver + " recursive calls");
+		System.out.println("Constraint Solver used " + sumRecCallsForConstraintSolver + " recursive calls");
+		System.out.println(":::: TestFinished ::::");
+	}
+	
+	@Test
+	public void testAllMediumSudokus() throws Exception{
+		System.out.println(":::: TestStarting ::::");
+		System.out.println("Solving all medium sudokus!");
+		int sumRecCallsForBackTrackingSolver = 0;
+		int sumRecCallsForConstraintSolver = 0;
+		
+		SudokuReader reader = new SudokuReader();
+		String relativePath = "Pack1/Medium";
+		String fileEnding = ".sdk";
+		for(int i = 1; i <= 10; ++i){
+			StatisticsObject backTrackingStats = new StatisticsObject();
+			StatisticsObject constraintsStats = new StatisticsObject();
+			Solver backTrackingSolver = new BacktrackSolver(backTrackingStats);
+			Solver constraintSolver = new ConstraintSolver(constraintsStats);
+			
+			String concatenated;
+			if(i < 10){
+				concatenated = relativePath + "0" + i + fileEnding;
+			}
+			else {
+				concatenated = relativePath + i + fileEnding;
+			}
+			File f = new File(concatenated);
+			Sudoku currentSudoku = reader.readFromFile(f);
+			System.out.println("Solving " + i + ". Medium Sudoku");
+			System.out.println("Using BackTrack Algorithm");
+			evaluateSolver(backTrackingSolver, currentSudoku);
+			System.out.println("Using Constraint Algorithm");
+			evaluateSolver(constraintSolver, currentSudoku);
+			sumRecCallsForBackTrackingSolver += backTrackingStats.recursiveCalls;
+			sumRecCallsForConstraintSolver += constraintsStats.recursiveCalls;
+		}
+		
+		Assert.assertTrue(sumRecCallsForConstraintSolver < sumRecCallsForBackTrackingSolver);
+		System.out.println("Finished Solving all medium sudokus!");
+		System.out.println("Backtracking Solver used " + sumRecCallsForBackTrackingSolver + " recursive calls");
+		System.out.println("Constraint Solver used " + sumRecCallsForConstraintSolver + " recursive calls");
+		System.out.println(":::: TestFinished ::::");
+	}
+	
+	@Test
+	public void testAllHardSudokus() throws Exception{
+		System.out.println(":::: TestStarting ::::");
+		System.out.println("Solving all hard sudokus!");
+		int sumRecCallsForBackTrackingSolver = 0;
+		int sumRecCallsForConstraintSolver = 0;
+		
+		SudokuReader reader = new SudokuReader();
+		String relativePath = "Pack1/Hard";
+		String fileEnding = ".sdk";
+		for(int i = 1; i <= 10; ++i){
+			StatisticsObject backTrackingStats = new StatisticsObject();
+			StatisticsObject constraintsStats = new StatisticsObject();
+			Solver backTrackingSolver = new BacktrackSolver(backTrackingStats);
+			Solver constraintSolver = new ConstraintSolver(constraintsStats);
+			
+			String concatenated;
+			if(i < 10){
+				concatenated = relativePath + "0" + i + fileEnding;
+			}
+			else {
+				concatenated = relativePath + i + fileEnding;
+			}
+			File f = new File(concatenated);
+			Sudoku currentSudoku = reader.readFromFile(f);
+			System.out.println("Solving " + i + ". Hard Sudoku");
+			System.out.println("Using BackTrack Algorithm");
+			evaluateSolver(backTrackingSolver, currentSudoku);
+			System.out.println("Using Constraint Algorithm");
+			evaluateSolver(constraintSolver, currentSudoku);
+			sumRecCallsForBackTrackingSolver += backTrackingStats.recursiveCalls;
+			sumRecCallsForConstraintSolver += constraintsStats.recursiveCalls;
+		}
+		
+		Assert.assertTrue(sumRecCallsForConstraintSolver < sumRecCallsForBackTrackingSolver);
+		System.out.println("Finished Solving all medium sudokus!");
+		System.out.println("Backtracking Solver used " + sumRecCallsForBackTrackingSolver + " recursive calls");
+		System.out.println("Constraint Solver used " + sumRecCallsForConstraintSolver + " recursive calls");
+		System.out.println(":::: TestFinished ::::");
+	}
 }
